@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reader-Writer Animation</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+      background-color: #f4f4f9;
+    }
+
+    .container {
+      display: flex;
+      justify-content: space-around;
+      margin: 20px auto;
+      max-width: 800px;
+    }
+
+    .queue {
+      border: 2px solid #ccc;
+      padding: 10px;
+      width: 200px;
+      height: 300px;
+      overflow: hidden;
+      background-color: #fff;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .queue h3 {
+      margin: 0;
+      background-color: #007bff;
+      color: white;
+      padding: 5px 0;
+      border-bottom: 2px solid #ccc;
+    }
+
+    .queue .item {
+      padding: 10px;
+      margin: 5px 0;
+      background-color: lightblue;
+      border-radius: 5px;
+      text-align: center;
+      font-weight: bold;
+      animation: fadeIn 0.5s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-10px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .status {
+      text-align: left;
+      margin-top: 20px;
+    }
+
+    .highlight {
+      background-color: yellow;
+      transition: background-color 0.5s ease;
+    }
+
+    .log {
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 10px;
+      border: 2px solid #ccc;
+      background-color: #fff;
+      height: 150px;
+      overflow-y: scroll;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .log p {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+
+    button {
+      padding: 10px 20px;
+      margin: 10px;
+      cursor: pointer;
+      background-color: #007bff;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      transition: background-color 0.3s;
+    }
+
+    button:hover {
+      background-color: #0056b3;
+    }
+
+    .active {
+      animation: activeEffect 2s ease infinite;
+    }
+
+    @keyframes activeEffect {
+      0%, 100% {
+        box-shadow: 0 0 10px rgba(255, 255, 0, 0.8);
+      }
+      50% {
+        box-shadow: 0 0 20px rgba(255, 255, 0, 1);
+      }
+    }
+  </style>
+</head>
+<body>
+  <h1>Reader-Writer Animation</h1>
+
+  <div class="container">
+    <div class="queue" id="readerQueue">
+      <h3>Readers</h3>
+    </div>
+
+    <div class="queue" id="writerQueue">
+      <h3>Writers</h3>
+    </div>
+  </div>
+
+  <div class="status" id="status">
+    <h3>Status:</h3>
+    <p>Currently idle...</p>
+  </div>
+
+  <div>
+    <button onclick="addReader()">Add Reader</button>
+    <button onclick="addWriter()">Add Writer</button>
+    <button onclick="startProcess()">Start Processing</button>
+  </div>
+
+  <div class="log" id="log">
+    <h3>Logs:</h3>
+  </div>
+
+  <script>
+    const readerQueue = document.getElementById('readerQueue');
+    const writerQueue = document.getElementById('writerQueue');
+    const status = document.getElementById('status');
+    const log = document.getElementById('log');
+
+    let readers = [];
+    let writers = [];
+    let isProcessing = false;
+
+    function addReader() {
+      const id = `Reader-${readers.length + 1}`;
+      readers.push(id);
+      updateQueue(readerQueue, readers);
+      logMessage(`${id} added to Reader queue.`);
+    }
+
+    function addWriter() {
+      const id = `Writer-${writers.length + 1}`;
+      writers.push(id);
+      updateQueue(writerQueue, writers);
+      logMessage(`${id} added to Writer queue.`);
+    }
+
+    function updateQueue(queueElement, queue) {
+      queueElement.innerHTML = '<h3>' + queueElement.querySelector('h3').innerText + '</h3>';
+      queue.forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'item';
+        div.textContent = item;
+        queueElement.appendChild(div);
+      });
+    }
+
+    function logMessage(message) {
+      const p = document.createElement('p');
+      p.textContent = message;
+      log.appendChild(p);
+      log.scrollTop = log.scrollHeight;
+    }
+
+    async function startProcess() {
+      if (isProcessing) return;
+      isProcessing = true;
+
+      while (readers.length > 0 || writers.length > 0) {
+        if (writers.length > 0) {
+          const writer = writers.shift();
+          updateQueue(writerQueue, writers);
+          setStatus(`${writer} is writing...`);
+          highlightProcess(writer, 'writer');
+          logMessage(`${writer} started writing.`);
+          await delay(2000);
+          logMessage(`${writer} finished writing.`);
+        } else if (readers.length > 0) {
+          const reader = readers.shift();
+          updateQueue(readerQueue, readers);
+          setStatus(`${reader} is reading...`);
+          highlightProcess(reader, 'reader');
+          logMessage(`${reader} started reading.`);
+          await delay(1000);
+          logMessage(`${reader} finished reading.`);
+        }
+      }
+
+      setStatus('All tasks completed!');
+      isProcessing = false;
+    }
+
+    function setStatus(message) {
+      status.querySelector('p').textContent = message;
+    }
+
+    function highlightProcess(id, type) {
+      const queue = type === 'reader' ? readerQueue : writerQueue;
+      const items = queue.querySelectorAll('.item');
+
+      items.forEach(item => {
+        if (item.textContent === id) {
+          item.classList.add('highlight');
+          setTimeout(() => item.classList.remove('highlight'), 2000);
+        }
+      });
+    }
+
+    function delay(ms) {
+      return new Promise(resolve => setTimeout(resolve, ms));
+    }
+  </script>
+</body>
+</html>

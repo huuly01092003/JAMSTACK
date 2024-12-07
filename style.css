@@ -1,0 +1,129 @@
+body {
+  background-color: #f8f9fa;
+  font-family: 'Arial', sans-serif;
+  text-align: center;
+}
+
+
+
+.dining-table {
+  position: relative;
+  width: 500px;
+  height: 500px;
+  margin: 0 auto; /* Căn giữa theo chiều ngang */
+  border: 2px solid #333;
+  border-radius: 50%;
+  background: radial-gradient(circle, #fff 50%, #ddd);
+  display: flex;
+  justify-content: center; /* Căn giữa nội dung bên trong theo chiều ngang */
+  align-items: center; /* Căn giữa nội dung bên trong theo chiều dọc */
+}
+
+.control-panel {
+  margin: 20px auto;
+}
+
+.philosopher {
+  position: absolute;
+  width: 50px;
+  height: 50px;
+  border: 2px solid black;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #3498db;
+  color: white;
+  font-size: 14px;
+}
+
+.chopsticks-indicator {
+  position: absolute;
+  top: -20px; /* Đặt trên đầu triết gia */
+  font-size: 16px;
+}
+
+.chopstick {
+  position: absolute;
+  width: 6px;
+  height: 80px;
+  background-color: #8e44ad;
+  transform-origin: top center; /* Gốc xoay là đầu đũa */
+  transition: transform 0.3s; /* Hiệu ứng mượt */
+}
+
+.chopstick.in-use {
+  background-color: #e74c3c; /* Màu khi đũa đang được dùng */
+}
+
+.result-box {
+  height: 150px;
+  overflow-y: auto;
+  border: 1px solid #ddd;
+  margin: 20px auto;
+  padding: 10px;
+  width: 300px;
+  background: #fff;
+}
+@keyframes thinking {
+  0% { background-color: #3498db; }
+  100% { background-color: #f1c40f; }
+}
+
+@keyframes eating {
+  0% { background-color: #e74c3c; }
+  100% { background-color: #2ecc71; }
+}
+
+@keyframes deadlock {
+  0% { background-color: #9b59b6; }
+  100% { background-color: #34495e; }
+}
+
+.philosopher.thinking {
+  animation: thinking 1s infinite alternate;
+}
+
+.philosopher.eating {
+  animation: eating 1s infinite alternate;
+}
+
+.philosopher.done {
+  background-color: #95a5a6;
+}
+
+.chopsticks-in-use {
+  background-color: #e74c3c; /* Màu đỏ khi đũa đang được sử dụng */
+}
+/* Thêm hiệu ứng animation khi hiển thị dòng log */
+.animate-action {
+  animation: fadeInOut 2s ease-in-out forwards;
+}
+
+/* styles.css */
+.content-box {
+  font-family: Arial, sans-serif;
+  background-color: #f8f9fa;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.content-box p {
+  font-size: 1.1em;
+}
+
+.reader-animation {
+  color: #28a745;
+  animation: blink 1s infinite;
+}
+
+.writer-animation {
+  color: #dc3545;
+  animation: blink 1s infinite;
+}
+
+@keyframes blink {
+  0% { opacity: 1; }
+  50% { opacity: 0.5; }
+  100% { opacity: 1; }
+}
+

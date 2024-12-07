@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DACN</title>
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Custom CSS -->
+  <link rel="stylesheet" href="styles.css">
+  <!-- Font Awesome for Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+
+<body style="background: linear-gradient(120deg, #d4fc79, #96e6a1); color: #333; font-family: Arial, sans-serif;">
+  <!-- Header -->
+   <header class="bg-primary text-white text-center " style="padding-bottom: 20px;">
+    <h1 class="display-4">Tìm hiểu công nghệ Jamstacks và xây dựng ứng dụng web minh hoạ các giải thuật đồng bộ tiến trình</h1>
+  </header>
+
+  <!-- Navbar -->
+  <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="#">DACN</a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarNav">
+        <ul class="navbar-nav ms-auto">
+         
+          <li class="nav-item">
+            <a class="nav-link" href="/trietgia.html">Philosopher</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/writers-reader.html">Writers-Reader</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="/producer-consumer.html">Producer-Consumer</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Main Content -->
+  <div class="container my-5">
+    <div class="row">
+      <!-- Left Side - Image -->
+      <div class="col-md-6 text-center">
+        <div class="col-md-6 text-center">
+          <div class="col-md-6 text-center">
+            <a class="btn btn-primary btn-lg " href="/mota-producer-consumer.html" style="height: 50px;width: 400px;margin-left: 20px;">Mô tả bài toán Producer-Consumer</a>
+        </div>
+        </div>
+        <div id="descriptionContent-pc" class="col-md-6 text-center" style="margin-top: 100px;width: 500px;margin-left: 10px; display: none;">
+          <p style="text-align: left;font-size: 20px;color:darkblue;">Bài toán "Producer-Consumer" mô tả một bộ đệm chia sẻ giữa các nhà sản xuất (producers) và người tiêu dùng (consumers). Các nhà sản xuất tạo sản phẩm và đưa vào bộ đệm, trong khi các người tiêu dùng lấy sản phẩm từ bộ đệm để sử dụng. Bài toán này giúp minh hoạ các vấn đề đồng bộ hoá tiến trình như tranh chấp tài nguyên và tránh tình trạng đầy bộ đệm hoặc trống bộ đệm.</p>
+        </div>
+        <img src="/img/producer-consumer.jpg" alt="Sample Image" class="img-fluid rounded shadow" style="width: 500px;height: 500px;margin-top: 100px;margin-right: 100px;">
+      </div>
+
+      <!-- Right Side - Buttons and Display Box -->
+      <div class="col-md-6">
+        <!-- Row 1: Button and Combobox -->
+        <div class="row mb-3 d-flex align-items-center">
+          <div class="col-4 d-flex justify-content-start">
+            <button id="runButton" class="btn btn-primary btn-lg">
+              <i class="fas fa-play"></i> Run
+            </button>
+          </div>
+          <div class="col-4 d-flex justify-content-end">
+            <select id="optionSelect" class="form-select form-select-lg">
+              <option value="Producer-Consumer - Semaphore">Semaphore</option>
+              <option value="Producer-Consumer - Monitor">Monitor</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Input Box for Custom Problem -->
+        <div class="mb-3">
+          <label for="numPhilosophers" class="form-label">Nhập số giới hạn</label>
+          <input type="number" id="numPhilosophers" class="form-control" value="5" min="1">
+        </div>
+
+        <!-- Row 2: Display Box -->
+        <div id="contentBox" class="content-box p-3 w-100 border border-dark" style="width: 500px;height: 510px;border-radius: 5px; overflow-y: auto;background: white">
+          Kết quả sẽ hiển thị ở đây...
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Bootstrap JS and dependencies -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+  <!-- Custom JS -->
+  <script src="script.js"></script>
+</body>
+
+</html>
